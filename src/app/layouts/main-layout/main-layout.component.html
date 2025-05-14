@@ -1,0 +1,21 @@
+<div class="main-layout">
+  <header class="header">
+    <nav class="nav">
+      <div class="nav-items">
+        @for (item of navItems; track item.path) {
+          <a [routerLink]="item.path" class="nav-link">
+            {{ item.label }}
+          </a>
+        }
+      </div>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2024 Your App Name. All rights reserved.</p>
+  </footer>
+</div> 

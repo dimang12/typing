@@ -1,0 +1,49 @@
+/* Add any custom styles here */
+.text-green-600 {
+  color: #059669;
+}
+
+.text-red-600 {
+  color: #dc2626;
+}
+
+.text-gray-400 {
+  color: #9ca3af;
+}
+
+.typing-area {
+  outline: none;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.typing-area:empty::before {
+  content: 'Start typing...';
+  color: #9ca3af;
+}
+
+.cursor-blink {
+  position: relative;
+}
+
+.cursor-blink::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 10px;
+  height: 2px;
+  background-color: #000;
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+}
+
+.cursor-hidden::after {
+  display: none;
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+} 

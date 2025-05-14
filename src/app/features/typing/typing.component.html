@@ -1,0 +1,49 @@
+<div class="max-w-6xl mx-auto p-6">
+  <div class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Typing Practice</h2>
+    <div class="flex justify-between items-center mb-4">
+      <div class="text-lg">
+        WPM: {{ wpm }} | Accuracy: {{ accuracy }}%
+      </div>
+      <div class="flex-1 flex justify-end gap-2">
+        <button (click)="startNewGame()" 
+              class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700">
+        New Game
+        </button>
+        <button (click)="togglePause()" 
+                class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
+          {{ isPaused ? 'Continue' : 'Pause' }}
+        </button>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="mb-8">
+    <div
+      (click)="focusInput()" 
+      class="text-2xl font-mono mb-4 p-4 bg-gray-100 rounded">
+      <div class="typing-area">
+        @for (char of targetText.split(''); track $index) {
+          <span [class]="getCharClass($index) + ($index === userInput.length ? ' cursor-blink' : '') + ' my-1 inline-block'">{{ char }}</span>
+        }
+      </div>
+    </div>
+    <input type="text"
+           [(ngModel)]="userInput"
+           (input)="checkInput()"
+           (keydown)="onKeyDown($event)"
+           [disabled]="!isGameActive"
+           #inputField
+           class="w-full p-4 text-xl font-mono border rounded focus:outline-none focus:ring-2 focus:ring-purple-600 opacity-0"
+           placeholder="Start typing...">
+  </div>
+
+  @if (isGameComplete) {
+    <div class="text-center p-4 bg-green-100 rounded">
+      <h3 class="text-xl font-bold mb-2">Game Complete!</h3>
+      <p>Final WPM: {{ wpm }}</p>
+      <p>Accuracy: {{ accuracy }}%</p>
+    </div>
+  }
+</div> 
