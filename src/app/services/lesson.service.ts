@@ -7,7 +7,10 @@ export interface TypingLesson {
   title: string;
   content: string;
   difficulty: 'easy' | 'medium' | 'hard';
-  category?: string;
+  categoryId: string; // Reference to TypingLessonCategories document ID
+  order?: number;
+  estimatedTime?: number;
+  tags?: string[];
 }
 
 @Injectable({
@@ -56,13 +59,27 @@ export class LessonService {
   }
 
   /**
-   * Get lessons by category
-   * @param category - The category of the lessons
+   * Get lessons by category ID
+   * @param categoryId - The ID of the category
    * @returns Observable<TypingLesson[]>
    */
-  getLessonsByCategory(category: string): Observable<TypingLesson[]> {
+  getLessonsByCategoryId(categoryId: string): Observable<TypingLesson[]> {
     return this.getLessons().pipe(
-      map(lessons => lessons.filter(lesson => lesson.category === category))
+      map(lessons => lessons
+        .filter(lesson => lesson.categoryId === categoryId)
+        .sort((a, b) => (a.order || 0) - (b.order || 0))
+      )
+    );
+  }
+
+  /**
+   * Count lessons by category ID
+   * @param categoryId - The ID of the category
+   * @returns Observable<number>
+   */
+  countLessonsByCategoryId(categoryId: string): Observable<number> {
+    return this.getLessonsByCategoryId(categoryId).pipe(
+      map(lessons => lessons.length)
     );
   }
 }

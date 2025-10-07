@@ -1,0 +1,322 @@
+[
+  {
+    "Cate_Name": "Introduction",
+    "Color": "bg-blue-500",
+    "Description": "Get started with typing basics and fundamentals",
+    "Icon": "book",
+    "Ordering": 1,
+    "Parent_Id": null
+  },
+  {
+    "Cate_Name": "Home Row Keys",
+    "Color": "bg-blue-400",
+    "Description": "Master the foundation keys: ASDF JKL;",
+    "Icon": "keyboard",
+    "Ordering": 1,
+    "Parent_Id": "introduction"
+  },
+  {
+    "Cate_Name": "Proper Posture",
+    "Color": "bg-blue-400",
+    "Description": "Learn correct sitting position and hand placement",
+    "Icon": "accessibility",
+    "Ordering": 2,
+    "Parent_Id": "introduction"
+  },
+  {
+    "Cate_Name": "Typing Basics",
+    "Color": "bg-blue-400",
+    "Description": "Fundamental typing techniques and principles",
+    "Icon": "touch_app",
+    "Ordering": 3,
+    "Parent_Id": "introduction"
+  },
+  {
+    "Cate_Name": "Basic",
+    "Color": "bg-green-500",
+    "Description": "Build your foundation with basic exercises",
+    "Icon": "school",
+    "Ordering": 2,
+    "Parent_Id": null
+  },
+  {
+    "Cate_Name": "Letter Practice",
+    "Color": "bg-green-400",
+    "Description": "Practice individual letters and combinations",
+    "Icon": "text_fields",
+    "Ordering": 1,
+    "Parent_Id": "basic"
+  },
+  {
+    "Cate_Name": "Common Words",
+    "Color": "bg-green-400",
+    "Description": "Type frequently used words",
+    "Icon": "spellcheck",
+    "Ordering": 2,
+    "Parent_Id": "basic"
+  },
+  {
+    "Cate_Name": "Simple Sentences",
+    "Color": "bg-green-400",
+    "Description": "Practice with basic sentence structures",
+    "Icon": "notes",
+    "Ordering": 3,
+    "Parent_Id": "basic"
+  },
+  {
+    "Cate_Name": "Punctuation Basics",
+    "Color": "bg-green-400",
+    "Description": "Learn to type common punctuation marks",
+    "Icon": "format_quote",
+    "Ordering": 4,
+    "Parent_Id": "basic"
+  },
+  {
+    "Cate_Name": "Intermediate",
+    "Color": "bg-yellow-500",
+    "Description": "Increase your speed and accuracy",
+    "Icon": "speed",
+    "Ordering": 3,
+    "Parent_Id": null
+  },
+  {
+    "Cate_Name": "Paragraphs",
+    "Color": "bg-yellow-400",
+    "Description": "Type longer text passages",
+    "Icon": "article",
+    "Ordering": 1,
+    "Parent_Id": "intermediate"
+  },
+  {
+    "Cate_Name": "Capitalization",
+    "Color": "bg-yellow-400",
+    "Description": "Practice using shift keys effectively",
+    "Icon": "text_format",
+    "Ordering": 2,
+    "Parent_Id": "intermediate"
+  },
+  {
+    "Cate_Name": "Speed Building",
+    "Color": "bg-yellow-400",
+    "Description": "Focus on increasing typing speed",
+    "Icon": "flash_on",
+    "Ordering": 3,
+    "Parent_Id": "intermediate"
+  },
+  {
+    "Cate_Name": "Accuracy Training",
+    "Color": "bg-yellow-400",
+    "Description": "Minimize errors while typing",
+    "Icon": "verified",
+    "Ordering": 4,
+    "Parent_Id": "intermediate"
+  },
+  {
+    "Cate_Name": "Advanced",
+    "Color": "bg-red-500",
+    "Description": "Master advanced typing techniques",
+    "Icon": "star",
+    "Ordering": 4,
+    "Parent_Id": null
+  },
+  {
+    "Cate_Name": "Complex Text",
+    "Color": "bg-red-400",
+    "Description": "Type challenging content",
+    "Icon": "psychology",
+    "Ordering": 1,
+    "Parent_Id": "advanced"
+  },
+  {
+    "Cate_Name": "Technical Writing",
+    "Color": "bg-red-400",
+    "Description": "Practice with technical documents",
+    "Icon": "engineering",
+    "Ordering": 2,
+    "Parent_Id": "advanced"
+  },
+  {
+    "Cate_Name": "Speed Tests",
+    "Color": "bg-red-400",
+    "Description": "Timed typing challenges",
+    "Icon": "timer",
+    "Ordering": 3,
+    "Parent_Id": "advanced"
+  },
+  {
+    "Cate_Name": "Endurance Training",
+    "Color": "bg-red-400",
+    "Description": "Long-form typing practice",
+    "Icon": "fitness_center",
+    "Ordering": 4,
+    "Parent_Id": "advanced"
+  },
+  {
+    "Cate_Name": "Programming",
+    "Color": "bg-purple-500",
+    "Description": "Type code efficiently",
+    "Icon": "code",
+    "Ordering": 5,
+    "Parent_Id": null
+  },
+  {
+    "Cate_Name": "JavaScript",
+    "Color": "bg-purple-400",
+    "Description": "Practice JavaScript syntax",
+    "Icon": "javascript",
+    "Ordering": 1,
+    "Parent_Id": "programming"
+  },
+  {
+    "Cate_Name": "Python",
+    "Color": "bg-purple-400",
+    "Description": "Type Python code",
+    "Icon": "code",
+    "Ordering": 2,
+    "Parent_Id": "programming"
+  },
+  {
+    "Cate_Name": "HTML & CSS",
+    "Color": "bg-purple-400",
+    "Description": "Web markup and styling",
+    "Icon": "html",
+    "Ordering": 3,
+    "Parent_Id": "programming"
+  },
+  {
+    "Cate_Name": "Java",
+    "Color": "bg-purple-400",
+    "Description": "Java programming practice",
+    "Icon": "coffee",
+    "Ordering": 4,
+    "Parent_Id": "programming"
+  },
+  {
+    "Cate_Name": "SQL",
+    "Color": "bg-purple-400",
+    "Description": "Database query practice",
+    "Icon": "storage",
+    "Ordering": 5,
+    "Parent_Id": "programming"
+  },
+  {
+    "Cate_Name": "Special Characters",
+    "Color": "bg-purple-400",
+    "Description": "Brackets, braces, and operators",
+    "Icon": "data_object",
+    "Ordering": 6,
+    "Parent_Id": "programming"
+  },
+  {
+    "Cate_Name": "Numbers",
+    "Color": "bg-indigo-500",
+    "Description": "Master the number row",
+    "Icon": "pin",
+    "Ordering": 6,
+    "Parent_Id": null
+  },
+  {
+    "Cate_Name": "Basic Numbers",
+    "Color": "bg-indigo-400",
+    "Description": "Practice typing numbers 0-9",
+    "Icon": "looks_one",
+    "Ordering": 1,
+    "Parent_Id": "numbers"
+  },
+  {
+    "Cate_Name": "Number Combinations",
+    "Color": "bg-indigo-400",
+    "Description": "Type number sequences",
+    "Icon": "calculate",
+    "Ordering": 2,
+    "Parent_Id": "numbers"
+  },
+  {
+    "Cate_Name": "Data Entry",
+    "Color": "bg-indigo-400",
+    "Description": "Numeric data typing practice",
+    "Icon": "table_chart",
+    "Ordering": 3,
+    "Parent_Id": "numbers"
+  },
+  {
+    "Cate_Name": "Mixed Text & Numbers",
+    "Color": "bg-indigo-400",
+    "Description": "Combine letters and numbers",
+    "Icon": "merge_type",
+    "Ordering": 4,
+    "Parent_Id": "numbers"
+  },
+  {
+    "Cate_Name": "Symbols",
+    "Color": "bg-pink-500",
+    "Description": "Practice special characters",
+    "Icon": "tag",
+    "Ordering": 7,
+    "Parent_Id": null
+  },
+  {
+    "Cate_Name": "Common Symbols",
+    "Color": "bg-pink-400",
+    "Description": "@ # $ % & * ( )",
+    "Icon": "alternate_email",
+    "Ordering": 1,
+    "Parent_Id": "symbols"
+  },
+  {
+    "Cate_Name": "Advanced Punctuation",
+    "Color": "bg-pink-400",
+    "Description": "Quotes, dashes, and more",
+    "Icon": "format_quote",
+    "Ordering": 2,
+    "Parent_Id": "symbols"
+  },
+  {
+    "Cate_Name": "Math Symbols",
+    "Color": "bg-pink-400",
+    "Description": "+ - × ÷ = < >",
+    "Icon": "functions",
+    "Ordering": 3,
+    "Parent_Id": "symbols"
+  },
+  {
+    "Cate_Name": "Special Characters",
+    "Color": "bg-pink-400",
+    "Description": "~ ` | \\ / ^ _",
+    "Icon": "more_horiz",
+    "Ordering": 4,
+    "Parent_Id": "symbols"
+  },
+  {
+    "Cate_Name": "Stories",
+    "Color": "bg-teal-500",
+    "Description": "Practice with engaging stories and narratives",
+    "Icon": "menu_book",
+    "Ordering": 8,
+    "Parent_Id": null
+  },
+  {
+    "Cate_Name": "Short Stories",
+    "Color": "bg-teal-400",
+    "Description": "Brief narrative passages",
+    "Icon": "auto_stories",
+    "Ordering": 1,
+    "Parent_Id": "stories"
+  },
+  {
+    "Cate_Name": "Classic Literature",
+    "Color": "bg-teal-400",
+    "Description": "Excerpts from famous books",
+    "Icon": "library_books",
+    "Ordering": 2,
+    "Parent_Id": "stories"
+  },
+  {
+    "Cate_Name": "News Articles",
+    "Color": "bg-teal-400",
+    "Description": "Current events and journalism",
+    "Icon": "newspaper",
+    "Ordering": 3,
+    "Parent_Id": "stories"
+  }
+]

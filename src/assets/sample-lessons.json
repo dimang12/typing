@@ -1,0 +1,128 @@
+[
+  {
+    "title": "Home Row Foundation",
+    "content": "asdf jkl; asdf jkl; fdsa ;lkj fdsa ;lkj asdf jkl; asdf jkl;",
+    "difficulty": "easy",
+    "categoryId": "REPLACE_WITH_HOME_ROW_KEYS_ID",
+    "order": 1,
+    "estimatedTime": 3,
+    "tags": ["home-row", "foundation", "beginner"]
+  },
+  {
+    "title": "Home Row Practice",
+    "content": "fff jjj ddd kkk sss lll aaa ;;; fff jjj ddd kkk sss lll aaa ;;;",
+    "difficulty": "easy",
+    "categoryId": "REPLACE_WITH_HOME_ROW_KEYS_ID",
+    "order": 2,
+    "estimatedTime": 5,
+    "tags": ["home-row", "practice"]
+  },
+  {
+    "title": "Common Letter Combinations",
+    "content": "the and for are but not you all can her was one our out day get has him his how man new now old see two way who boy did its let put say she too use",
+    "difficulty": "easy",
+    "categoryId": "REPLACE_WITH_LETTER_PRACTICE_ID",
+    "order": 1,
+    "estimatedTime": 5,
+    "tags": ["letters", "common-words"]
+  },
+  {
+    "title": "Frequently Used Words",
+    "content": "about after again back because before between both call came come could down each even find first from give good great hand help here just know last little long look made make many more most much must never next only other over part place right said same should still such take than that their them then there these they thing think this those through time under very want well were what when where which while will with work would year your",
+    "difficulty": "medium",
+    "categoryId": "REPLACE_WITH_COMMON_WORDS_ID",
+    "order": 1,
+    "estimatedTime": 8,
+    "tags": ["common-words", "vocabulary"]
+  },
+  {
+    "title": "Simple Sentences Practice",
+    "content": "The quick brown fox jumps over the lazy dog. A journey of a thousand miles begins with a single step. Practice makes perfect. Time flies when you are having fun.",
+    "difficulty": "easy",
+    "categoryId": "REPLACE_WITH_SIMPLE_SENTENCES_ID",
+    "order": 1,
+    "estimatedTime": 5,
+    "tags": ["sentences", "phrases"]
+  },
+  {
+    "title": "Basic Punctuation",
+    "content": "Hello, world! How are you? I am fine, thank you. Let's practice typing. It's a beautiful day. Don't worry, be happy!",
+    "difficulty": "easy",
+    "categoryId": "REPLACE_WITH_PUNCTUATION_BASICS_ID",
+    "order": 1,
+    "estimatedTime": 4,
+    "tags": ["punctuation", "comma", "period"]
+  },
+  {
+    "title": "Paragraph Typing",
+    "content": "In 1976, The Bay Area Rapid Transit District, known as BART, published a report on the possibilities of extending the system eastward. This was advanced planning by definition—the inaugural commuter trains would not start rolling until the following year. But considering how long it took to build a system as complex as BART, initially envisioned in the 1950s, thinking ahead made sense.",
+    "difficulty": "medium",
+    "categoryId": "REPLACE_WITH_PARAGRAPHS_ID",
+    "order": 1,
+    "estimatedTime": 10,
+    "tags": ["paragraphs", "long-text"]
+  },
+  {
+    "title": "Capitalization Practice",
+    "content": "JavaScript is a programming language. Python is popular for Data Science. HTML and CSS are used for Web Development. The United States of America is in North America. Monday is the first day of the week.",
+    "difficulty": "medium",
+    "categoryId": "REPLACE_WITH_CAPITALIZATION_ID",
+    "order": 1,
+    "estimatedTime": 6,
+    "tags": ["capitalization", "proper-nouns"]
+  },
+  {
+    "title": "JavaScript Functions",
+    "content": "function greet(name) { return 'Hello, ' + name + '!'; } const add = (a, b) => a + b; let result = add(5, 3); console.log(result);",
+    "difficulty": "medium",
+    "categoryId": "REPLACE_WITH_JAVASCRIPT_ID",
+    "order": 1,
+    "estimatedTime": 8,
+    "tags": ["javascript", "functions", "code"]
+  },
+  {
+    "title": "Python Basics",
+    "content": "def greet(name): return f'Hello, {name}!' def add(a, b): return a + b result = add(5, 3) print(result)",
+    "difficulty": "medium",
+    "categoryId": "REPLACE_WITH_PYTHON_ID",
+    "order": 1,
+    "estimatedTime": 7,
+    "tags": ["python", "functions", "code"]
+  },
+  {
+    "title": "HTML Structure",
+    "content": "<!DOCTYPE html> <html> <head> <title>My Page</title> </head> <body> <h1>Welcome</h1> <p>This is a paragraph.</p> </body> </html>",
+    "difficulty": "easy",
+    "categoryId": "REPLACE_WITH_HTML_CSS_ID",
+    "order": 1,
+    "estimatedTime": 6,
+    "tags": ["html", "markup", "web"]
+  },
+  {
+    "title": "Number Practice 0-9",
+    "content": "0123456789 9876543210 1234567890 0987654321 1357924680 2468013579",
+    "difficulty": "easy",
+    "categoryId": "REPLACE_WITH_BASIC_NUMBERS_ID",
+    "order": 1,
+    "estimatedTime": 4,
+    "tags": ["numbers", "digits"]
+  },
+  {
+    "title": "Common Symbols",
+    "content": "@ # $ % & * ( ) - _ = + [ ] { } | \\ / < > ? ! ~ `",
+    "difficulty": "medium",
+    "categoryId": "REPLACE_WITH_COMMON_SYMBOLS_ID",
+    "order": 1,
+    "estimatedTime": 5,
+    "tags": ["symbols", "special-characters"]
+  },
+  {
+    "title": "Short Story: The Beginning",
+    "content": "Once upon a time, in a small village nestled between rolling hills, there lived a young girl named Emma. She had always dreamed of adventure, of seeing the world beyond the familiar streets of her hometown. One day, she decided it was time to make that dream come true.",
+    "difficulty": "medium",
+    "categoryId": "REPLACE_WITH_SHORT_STORIES_ID",
+    "order": 1,
+    "estimatedTime": 8,
+    "tags": ["story", "narrative", "fiction"]
+  }
+]

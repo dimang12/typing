@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TypingLesson } from '../../services/lesson.service';
+import { TypingLesson, LessonService } from '../../services/lesson.service';
+import { StateService } from '../../services/state.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-typing',
@@ -10,9 +12,11 @@ import { TypingLesson } from '../../services/lesson.service';
   templateUrl: './typing.component.html',
   styleUrls: ['./typing.component.css']
 })
-export class TypingComponent implements OnInit {
+export class TypingComponent implements OnInit, OnDestroy {
   @ViewChild('inputField') inputField!: ElementRef;
   @Input() lesson!: TypingLesson;
+  @Output() nextLesson = new EventEmitter<void>();
+  
   targetText = '';
   userInput = '';
   isGameActive = true;
@@ -25,10 +29,28 @@ export class TypingComponent implements OnInit {
   accuracy = 100;
   correctChars = 0;
   totalChars = 0;
+  private subscription: Subscription;
+
+  constructor(
+    private stateService: StateService,
+    private lessonService: LessonService
+  ) {
+    this.subscription = this.stateService.selectedLesson$.subscribe(lesson => {
+      if (lesson) {
+        this.lesson = lesson;
+        this.targetText = lesson.content;
+        this.startNewGame();
+      }
+    });
+  }
 
   ngOnInit() {
     this.targetText = this.lesson.content;
     this.startNewGame();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -134,5 +156,28 @@ export class TypingComponent implements OnInit {
 
   focusInput() {
     this.inputField.nativeElement.focus();
+  }
+
+  loadNextLesson() {
+    if (!this.lesson.categoryId) {
+      console.warn('No category ID found for current lesson');
+      return;
+    }
+
+    // Get all lessons in the same category
+    this.lessonService.getLessonsByCategoryId(this.lesson.categoryId).subscribe(lessons => {
+      // Find current lesson index
+      const currentIndex = lessons.findIndex(l => l.id === this.lesson.id);
+      
+      if (currentIndex !== -1 && currentIndex < lessons.length - 1) {
+        // Load next lesson in the same category
+        const nextLesson = lessons[currentIndex + 1];
+        this.stateService.setSelectedLesson(nextLesson);
+      } else {
+        // No more lessons in this category
+        alert('🎉 Congratulations! You\'ve completed all lessons in this category!');
+        this.startNewGame();
+      }
+    });
   }
 } 

@@ -1,0 +1,32 @@
+<nav class="w-full fixed bottom-0 flex flex-row justify-center items-center p-4 bg-transparent z-40">
+  <!-- Backdrop -->
+  @if (showMenuWrapper) {
+    <div class="fixed inset-0 z-45" (click)="closeMenu()"></div>
+  }
+  
+  <!-- Menu Wrapper -->
+  @if (showMenuWrapper) {
+    <div class="fixed bottom-28 left-1/2 transform -translate-x-1/2 z-50 animate-slide-up">
+      @if (activeMenuItem?.label === 'Lessons') {
+        <app-lessons-menu (closeMenu)="closeMenu()"></app-lessons-menu>
+      }
+    </div>
+  }
+  <!-- End Menu Wrapper -->
+
+  <div class="flex flex-row justify-center items-center space-x-4 text-white bg-purple-600 rounded-full px-4 py-3 ml-2 shadow-lg">
+    @for (item of navItems; track item.path) {
+      <div class="group"
+           (mouseenter)="showTooltip = true; tooltipText = item.label"
+           (mouseleave)="showTooltip = false"
+           (mousemove)="updateTooltipPosition($event)">
+        <a [routerLink]="item.type === 'page' ? item.path : null"
+           (click)="onNavItemClick(item, $event)"
+           [class.bg-purple-700]="item.type === 'menu' && showMenuWrapper && activeMenuItem?.path === item.path"
+           class="flex items-center justify-center w-12 h-12 rounded-full hover:bg-purple-700 transition-colors duration-200 group-hover:scale-110 cursor-pointer">
+          <span class="material-icons text-2xl">{{ item.icon }}</span>
+        </a>
+      </div>
+    }
+  </div>
+</nav>

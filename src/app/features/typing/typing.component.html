@@ -1,49 +1,171 @@
-<div class="max-w-6xl mx-auto p-6">
-  <div class="mb-8">
-    <h2 class="text-2xl font-bold mb-4">Typing Practice</h2>
-    <div class="flex justify-between items-center mb-4">
-      <div class="text-lg">
-        WPM: {{ wpm }} | Accuracy: {{ accuracy }}%
+<div class="max-w-8xl mx-auto p-6 mt-10">
+  @if (!isGameComplete) {
+    <div class="mb-8">
+      <h2 class="text-3xl font-bold mb-6">Typing Practice</h2>
+      <div class="flex justify-between items-center mb-6">
+        <div class="text-2xl font-semibold">
+          WPM: {{ wpm }} | Accuracy: {{ accuracy }}%
+        </div>
+        <div class="flex-1 flex justify-end gap-3">
+          <button (click)="startNewGame()" 
+                class="px-6 py-3 text-lg bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+          New Game
+          </button>
+          <button (click)="togglePause()" 
+                  class="px-6 py-3 text-lg bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+            {{ isPaused ? 'Continue' : 'Pause' }}
+          </button>
+        </div>
+        
       </div>
-      <div class="flex-1 flex justify-end gap-2">
-        <button (click)="startNewGame()" 
-              class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700">
-        New Game
-        </button>
-        <button (click)="togglePause()" 
-                class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
-          {{ isPaused ? 'Continue' : 'Pause' }}
-        </button>
-      </div>
-      
     </div>
-  </div>
 
-  <div class="mb-8">
-    <div
-      (click)="focusInput()" 
-      class="text-2xl font-mono mb-4 p-4 bg-gray-100 rounded">
-      <div class="typing-area">
-        @for (char of targetText.split(''); track $index) {
-          <span [class]="getCharClass($index) + ($index === userInput.length ? ' cursor-blink' : '') + ' my-1 inline-block'">{{ char }}</span>
-        }
+    <div class="mb-8">
+      <div
+        (click)="focusInput()" 
+        class="text-3xl font-mono mb-4 p-6 bg-gray-100 rounded leading-relaxed">
+        <div class="typing-area">
+          @for (char of targetText.split(''); track $index) {
+            <span [class]="getCharClass($index) + ($index === userInput.length ? ' cursor-blink' : '') + ' my-1 inline-block'">{{ char }}</span>
+          }
+        </div>
       </div>
+      <input type="text"
+             [(ngModel)]="userInput"
+             (input)="checkInput()"
+             (keydown)="onKeyDown($event)"
+             [disabled]="!isGameActive"
+             #inputField
+             class="w-full p-4 text-3xl font-mono border rounded focus:outline-none focus:ring-2 focus:ring-purple-600 opacity-0"
+             placeholder="Start typing...">
     </div>
-    <input type="text"
-           [(ngModel)]="userInput"
-           (input)="checkInput()"
-           (keydown)="onKeyDown($event)"
-           [disabled]="!isGameActive"
-           #inputField
-           class="w-full p-4 text-xl font-mono border rounded focus:outline-none focus:ring-2 focus:ring-purple-600 opacity-0"
-           placeholder="Start typing...">
-  </div>
+  }
 
   @if (isGameComplete) {
-    <div class="text-center p-4 bg-green-100 rounded">
-      <h3 class="text-xl font-bold mb-2">Game Complete!</h3>
-      <p>Final WPM: {{ wpm }}</p>
-      <p>Accuracy: {{ accuracy }}%</p>
+    <div class="relative overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 rounded-2xl shadow-2xl p-8 animate-fade-in">
+      <!-- Celebration Icons -->
+      <div class="absolute top-4 left-4 animate-bounce-slow">
+        <span class="material-icons text-6xl text-yellow-400">emoji_events</span>
+      </div>
+      <div class="absolute top-4 right-4 animate-bounce-slow animation-delay-200">
+        <span class="material-icons text-6xl text-pink-400">celebration</span>
+      </div>
+      
+      <!-- Confetti Effect -->
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="confetti-piece animate-confetti-1"></div>
+        <div class="confetti-piece animate-confetti-2"></div>
+        <div class="confetti-piece animate-confetti-3"></div>
+        <div class="confetti-piece animate-confetti-4"></div>
+        <div class="confetti-piece animate-confetti-5"></div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="relative z-10 text-center">
+        <!-- Title with Animation -->
+        <div class="mb-6 animate-scale-in">
+          <h3 class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
+            🎉 Excellent Work! 🎉
+          </h3>
+          <p class="text-xl text-gray-600">You've completed the lesson!</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-2 gap-6 mb-8 max-w-2xl mx-auto">
+          <!-- WPM Card -->
+          <div class="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-transform animate-slide-up">
+            <div class="flex items-center justify-center mb-3">
+              <span class="material-icons text-5xl text-purple-600">speed</span>
+            </div>
+            <p class="text-gray-600 text-sm mb-2">Words Per Minute</p>
+            <p class="text-5xl font-bold text-purple-600">{{ wpm }}</p>
+            <div class="mt-3">
+              @if (wpm >= 60) {
+                <span class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
+                  🚀 Excellent!
+                </span>
+              } @else if (wpm >= 40) {
+                <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
+                  👍 Great Job!
+                </span>
+              } @else {
+                <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-semibold">
+                  💪 Keep Practicing!
+                </span>
+              }
+            </div>
+          </div>
+
+          <!-- Accuracy Card -->
+          <div class="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-transform animate-slide-up animation-delay-100">
+            <div class="flex items-center justify-center mb-3">
+              <span class="material-icons text-5xl text-green-600">verified</span>
+            </div>
+            <p class="text-gray-600 text-sm mb-2">Accuracy</p>
+            <p class="text-5xl font-bold text-green-600">{{ accuracy }}%</p>
+            <div class="mt-3">
+              @if (accuracy >= 95) {
+                <span class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
+                  ⭐ Perfect!
+                </span>
+              } @else if (accuracy >= 85) {
+                <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
+                  ✨ Very Good!
+                </span>
+              } @else {
+                <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-semibold">
+                  📈 Improving!
+                </span>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="max-w-2xl mx-auto mb-6">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-semibold text-gray-600">Your Progress</span>
+            <span class="text-sm font-semibold text-purple-600">{{ correctChars }}/{{ totalChars }} characters</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+            <div class="bg-gradient-to-r from-purple-500 to-pink-500 h-4 rounded-full transition-all duration-1000 ease-out animate-progress"
+                 [style.width.%]="accuracy"></div>
+          </div>
+        </div>
+
+        <!-- Motivational Message -->
+        <div class="bg-white rounded-xl shadow-lg p-6 max-w-2xl mx-auto mb-6 animate-fade-in animation-delay-300">
+          <div class="flex items-start space-x-4">
+            <span class="material-icons text-4xl text-yellow-500">lightbulb</span>
+            <div class="text-left">
+              <h4 class="text-lg font-bold text-gray-800 mb-2">💡 Pro Tip</h4>
+              <p class="text-gray-600">
+                @if (wpm < 40) {
+                  Focus on accuracy first, speed will come naturally with practice. Keep your fingers on the home row!
+                } @else if (accuracy < 90) {
+                  Great speed! Now work on reducing errors by slowing down slightly and focusing on precision.
+                } @else {
+                  Outstanding performance! Challenge yourself with harder lessons to keep improving.
+                }
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-center gap-4 animate-fade-in animation-delay-400">
+          <button (click)="startNewGame()" 
+                  class="px-8 py-4 text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all shadow-lg flex items-center gap-2">
+            <span class="material-icons">replay</span>
+            Try Again
+          </button>
+          <button (click)="loadNextLesson()"
+                  class="px-8 py-4 text-lg font-semibold bg-white text-purple-600 border-2 border-purple-600 rounded-xl hover:bg-purple-50 transform hover:scale-105 transition-all shadow-lg flex items-center gap-2">
+            <span class="material-icons">arrow_forward</span>
+            Next Lesson
+          </button>
+        </div>
+      </div>
     </div>
   }
 </div> 

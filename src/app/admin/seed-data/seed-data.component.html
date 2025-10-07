@@ -1,0 +1,148 @@
+<div class="max-w-4xl mx-auto p-8">
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Database Seeding Tool</h1>
+    
+    <!-- Counts -->
+    <div class="mb-6 grid grid-cols-2 gap-4">
+      <div class="p-4 bg-blue-50 rounded-lg">
+        <p class="text-lg">
+          <span class="font-semibold">Categories:</span>
+          <span class="ml-2 text-2xl font-bold text-blue-600">{{ categoryCount }}</span>
+        </p>
+      </div>
+      <div class="p-4 bg-purple-50 rounded-lg">
+        <p class="text-lg">
+          <span class="font-semibold">Lessons:</span>
+          <span class="ml-2 text-2xl font-bold text-purple-600">{{ lessonCount }}</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Category Actions -->
+    <h2 class="text-2xl font-bold mb-4 text-gray-800">Categories</h2>
+    <div class="space-y-4 mb-6">
+      <div class="flex items-center space-x-4">
+        <button 
+          (click)="seedCategories()"
+          [disabled]="isLoading"
+          class="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center">
+          <span class="material-icons mr-2">add_circle</span>
+          Seed Categories
+        </button>
+        <div class="flex-1 text-sm text-gray-600">
+          Add all categories from JSON file to Firestore
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <button 
+          (click)="resetCategories()"
+          [disabled]="isLoading"
+          class="flex-1 bg-yellow-600 hover:bg-yellow-700 disabled:bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center">
+          <span class="material-icons mr-2">refresh</span>
+          Reset Categories
+        </button>
+        <div class="flex-1 text-sm text-gray-600">
+          Clear all and re-seed from JSON
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <button 
+          (click)="clearCategories()"
+          [disabled]="isLoading"
+          class="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center">
+          <span class="material-icons mr-2">delete_forever</span>
+          Clear All Categories
+        </button>
+        <div class="flex-1 text-sm text-gray-600">
+          ⚠️ Delete all categories from Firestore
+        </div>
+      </div>
+    </div>
+
+    <!-- Lesson Actions -->
+    <h2 class="text-2xl font-bold mb-4 mt-8 text-gray-800">Lessons</h2>
+    <div class="space-y-4 mb-6">
+      <div class="flex items-center space-x-4">
+        <button 
+          (click)="seedLessons()"
+          [disabled]="isLoading"
+          class="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center">
+          <span class="material-icons mr-2">add_circle</span>
+          Seed Lessons
+        </button>
+        <div class="flex-1 text-sm text-gray-600">
+          Add sample lessons to Firestore (requires categories first)
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <button 
+          (click)="resetLessons()"
+          [disabled]="isLoading"
+          class="flex-1 bg-yellow-600 hover:bg-yellow-700 disabled:bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center">
+          <span class="material-icons mr-2">refresh</span>
+          Reset Lessons
+        </button>
+        <div class="flex-1 text-sm text-gray-600">
+          Clear all and re-seed lessons
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <button 
+          (click)="clearLessons()"
+          [disabled]="isLoading"
+          class="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center">
+          <span class="material-icons mr-2">delete_forever</span>
+          Clear All Lessons
+        </button>
+        <div class="flex-1 text-sm text-gray-600">
+          ⚠️ Delete all lessons from Firestore
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    @if (isLoading) {
+      <div class="flex items-center justify-center p-4">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+        <span class="ml-4 text-lg text-gray-600">Processing...</span>
+      </div>
+    }
+
+    <!-- Message Display -->
+    @if (message) {
+      <div class="mt-6 p-4 rounded-lg"
+           [class.bg-green-50]="message.includes('Success') || message.includes('completed')"
+           [class.bg-red-50]="message.includes('Error')"
+           [class.bg-blue-50]="!message.includes('Success') && !message.includes('Error') && !message.includes('completed')">
+        <p class="font-medium"
+           [class.text-green-800]="message.includes('Success') || message.includes('completed')"
+           [class.text-red-800]="message.includes('Error')"
+           [class.text-blue-800]="!message.includes('Success') && !message.includes('Error') && !message.includes('completed')">
+          {{ message }}
+        </p>
+      </div>
+    }
+
+    <!-- Instructions -->
+    <div class="mt-8 p-4 bg-gray-50 rounded-lg">
+      <h3 class="font-semibold text-gray-800 mb-2">Instructions:</h3>
+      <ol class="list-decimal list-inside space-y-2 text-sm text-gray-600">
+        <li><strong>Seed Categories First:</strong> Adds all 40 categories to Firestore</li>
+        <li><strong>Then Seed Lessons:</strong> Adds sample lessons linked to categories</li>
+        <li><strong>Reset:</strong> Removes all existing data and re-seeds fresh data</li>
+        <li><strong>Clear All:</strong> Removes all data (use with caution!)</li>
+      </ol>
+      
+      <div class="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
+        <p class="text-sm text-yellow-800">
+          <span class="material-icons text-sm align-middle mr-1">warning</span>
+          <strong>Note:</strong> Make sure you have proper Firebase permissions before running these operations.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

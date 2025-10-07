@@ -1,0 +1,41 @@
+<nav class="h-full flex justify-center items-center p-3">
+  <div class="relative">
+    <button type="button" class="inline-flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900" aria-expanded="false">
+      <span>Introduction</span>
+      <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+        <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+      </svg>
+    </button>
+  
+    <div class="absolute -left-5 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-y">
+      <div class="max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm/6 shadow-lg border border-gray-200">
+        <ul class="p-4 space-y-2">
+          @for (lesson of allLessons; track lesson.id) {
+            <li class="group relative flex gap-x-6 rounded-2xl p-4 transition-colors duration-200"
+                [class.bg-gray-100]="isLessonActive(lesson.id)"
+                [class.hover:bg-gray-100]="!isLessonActive(lesson.id)"
+                (click)="onLessonSelect(lesson)">
+              <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg"
+                   [class.bg-gray-50]="!isLessonActive(lesson.id)"
+                   [class.bg-white]="isLessonActive(lesson.id)"
+                   [class.group-hover:bg-white]="!isLessonActive(lesson.id)">
+                <mat-icon>chevron_right</mat-icon>
+              </div>
+              <div>
+                <a class="font-semibold text-gray-900 cursor-pointer">
+                  {{ lesson.title }}
+                  <span class="absolute inset-0"></span>
+                </a>
+                <p class="mt-1 text-gray-600">{{ lesson.difficulty }}</p>
+              </div>
+            </li>
+          }
+        </ul>
+        <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
+    
+        </div>
+      </div>
+    </div>
+  </div>
+
+</nav>
