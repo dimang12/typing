@@ -4,6 +4,8 @@ import { TypingComponent } from './features/typing/typing.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { LessonComponent } from './pages/lesson/lesson.component';
+import { SeedDataComponent } from './admin/seed-data/seed-data.component';
 
 export const routes: Routes = [
   {
@@ -12,8 +14,10 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
-      { path: 'login', loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent) },
-      { path: 'register', loadComponent: () => import('./auth/register/register.component').then(m => m.RegisterComponent) }
+      { path: 'lessons', component: LessonComponent },
+      { path: 'admin/seed', component: SeedDataComponent }
     ]
-  }
+  },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent }
 ];

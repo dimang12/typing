@@ -1,0 +1,183 @@
+<div class="container mx-auto px-4 py-8 relative">
+  <!-- Breadcrumb - Fixed top-left -->
+  @if (breadcrumb.length > 0 && viewMode !== 'main') {
+    <div class="fixed top-20 left-6 z-40 bg-white rounded-lg shadow-lg px-4 py-2">
+      <nav class="flex items-center space-x-2 text-sm">
+        <button (click)="backToMain()" class="text-purple-600 hover:text-purple-700 hover:underline">
+          <span class="material-icons text-sm align-middle">home</span>
+        </button>
+        @for (item of breadcrumb; track item.id; let i = $index) {
+          <span class="text-gray-400">/</span>
+          <button 
+            (click)="onBreadcrumbClick(i)"
+            [class.text-gray-600]="i < breadcrumb.length - 1"
+            [class.text-gray-900]="i === breadcrumb.length - 1"
+            [class.font-semibold]="i === breadcrumb.length - 1"
+            class="hover:text-purple-600 hover:underline">
+            {{ item.name }}
+          </button>
+        }
+      </nav>
+    </div>
+  }
+
+  <!-- Main Categories View -->
+  @if (viewMode === 'main') {
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-4xl font-bold mb-8 text-gray-800">Lesson Categories</h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (category of mainCategories; track category.id) {
+          <div 
+            (click)="onMainCategoryClick(category)"
+            class="group cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 p-6 border border-gray-100">
+            <div class="flex items-start space-x-4">
+              <div [class]="category.Color + ' w-16 h-16 rounded-full flex items-center justify-center text-white shadow-lg flex-shrink-0'">
+                <span class="material-icons text-3xl">{{ category.Icon }}</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <h3 class="text-xl font-semibold text-gray-800 group-hover:text-purple-600 transition-colors mb-2">
+                  {{ category.Cate_Name }}
+                </h3>
+                <p class="text-sm text-gray-600 mb-3">{{ category.Description }}</p>
+                <div class="flex items-center justify-between">
+                  <span class="text-xs text-gray-500">
+                    {{ category.children?.length || 0 }} sub-categories
+                  </span>
+                  <span class="text-xs font-semibold text-purple-600">
+                    {{ getTotalLessonCount(category) }} lessons
+                  </span>
+                </div>
+              </div>
+              <span class="material-icons text-gray-400 group-hover:text-purple-600 transition-colors">
+                chevron_right
+              </span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Sub Categories View -->
+  @if (viewMode === 'sub' && selectedMainCategory) {
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-6">
+        <button 
+          (click)="backToMain()"
+          class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors mb-4">
+          <span class="material-icons">arrow_back</span>
+          <span class="font-medium">Back to Categories</span>
+        </button>
+        <h1 class="text-4xl font-bold text-gray-800">{{ selectedMainCategory.Cate_Name }}</h1>
+        <p class="text-gray-600 mt-2">{{ selectedMainCategory.Description }}</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        @for (subCat of subCategories; track subCat.id) {
+          <div 
+            (click)="onSubCategoryClick(subCat)"
+            class="group cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-4 flex-1">
+                <div [class]="subCat.Color + ' w-12 h-12 rounded-lg flex items-center justify-center text-white shadow-md'">
+                  <span class="material-icons text-xl">{{ subCat.Icon }}</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-lg font-semibold text-gray-800 group-hover:text-purple-600 transition-colors">
+                    {{ subCat.Cate_Name }}
+                  </h3>
+                  <p class="text-sm text-gray-600 mt-1">{{ subCat.Description }}</p>
+                  <span class="text-xs font-semibold text-purple-600 mt-2 inline-block">
+                    {{ getLessonCount(subCat.id) }} lessons
+                  </span>
+                </div>
+              </div>
+              <span class="material-icons text-gray-400 group-hover:text-purple-600 transition-colors">
+                chevron_right
+              </span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Lessons List View -->
+  @if (viewMode === 'lessons' && selectedSubCategory) {
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-6">
+        <button 
+          (click)="backToSub()"
+          class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors mb-4">
+          <span class="material-icons">arrow_back</span>
+          <span class="font-medium">Back to {{ selectedMainCategory?.Cate_Name }}</span>
+        </button>
+        <h1 class="text-4xl font-bold text-gray-800">{{ selectedSubCategory.Cate_Name }}</h1>
+        <p class="text-gray-600 mt-2">{{ selectedSubCategory.Description }}</p>
+      </div>
+      
+      @if (lessons.length > 0) {
+        <div class="grid grid-cols-1 gap-4">
+          @for (lesson of lessons; track lesson.id) {
+            <div 
+              (click)="onLessonClick(lesson)"
+              class="group cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4 flex-1">
+                  <div class="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
+                    <span class="material-icons text-purple-600">play_arrow</span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h3 class="text-xl font-semibold text-gray-800 group-hover:text-purple-600 transition-colors">
+                      {{ lesson.title }}
+                    </h3>
+                    <div class="flex items-center space-x-3 mt-2">
+                      <span 
+                        [class]="'px-3 py-1 rounded-full text-xs font-medium ' + 
+                          (lesson.difficulty === 'easy' ? 'bg-green-100 text-green-700' : 
+                           lesson.difficulty === 'medium' ? 'bg-yellow-100 text-yellow-700' : 
+                           'bg-red-100 text-red-700')">
+                        {{ lesson.difficulty }}
+                      </span>
+                      @if (lesson.estimatedTime) {
+                        <span class="text-xs text-gray-500 flex items-center">
+                          <span class="material-icons text-sm mr-1">schedule</span>
+                          {{ lesson.estimatedTime }} min
+                        </span>
+                      }
+                    </div>
+                  </div>
+                </div>
+                <span class="material-icons text-gray-400 group-hover:text-purple-600 transition-colors">
+                  chevron_right
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="text-center py-12 bg-gray-50 rounded-xl">
+          <span class="material-icons text-6xl text-gray-300 mb-4">inbox</span>
+          <p class="text-gray-600 text-lg">No lessons available yet</p>
+          <p class="text-gray-500 text-sm mt-2">Lessons will be added soon!</p>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Typing Practice View -->
+  @if (viewMode === 'typing' && selectedLesson) {
+    <div>
+      <div class="mb-6">
+        <button 
+          (click)="backToLessons()"
+          class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+          <span class="material-icons">arrow_back</span>
+          <span class="font-medium">Back to Lessons</span>
+        </button>
+      </div>
+      
+      <app-typing [lesson]="selectedLesson"></app-typing>
+    </div>
+  }
+</div>

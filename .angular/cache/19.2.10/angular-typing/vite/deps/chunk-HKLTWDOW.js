@@ -2734,13 +2734,13 @@ var MatCommonModule = class _MatCommonModule {
 })();
 
 export {
-  normalizePassiveListenerOptions,
-  _getEventTarget,
   isFakeMousedownFromScreenReader,
   isFakeTouchstartFromScreenReader,
+  _getEventTarget,
+  normalizePassiveListenerOptions,
   FocusMonitor,
   ObserversModule,
   _IdGenerator,
   MatCommonModule
 };
-//# sourceMappingURL=chunk-RE33I3N5.js.map
+//# sourceMappingURL=chunk-HKLTWDOW.js.map
