@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TypingLesson, LessonService } from '../../services/lesson.service';
 import { StateService } from '../../services/state.service';
 import { Subscription } from 'rxjs';
+import { Chart, ChartConfiguration } from 'chart.js/auto';
 
 @Component({
   selector: 'app-typing',
@@ -14,6 +15,7 @@ import { Subscription } from 'rxjs';
 })
 export class TypingComponent implements OnInit, OnDestroy {
   @ViewChild('inputField') inputField!: ElementRef;
+  @ViewChild('wpmCanvas', { static: false }) wpmCanvas!: ElementRef<HTMLCanvasElement>;
   @Input() lesson!: TypingLesson;
   @Output() nextLesson = new EventEmitter<void>();
   
@@ -27,6 +29,21 @@ export class TypingComponent implements OnInit, OnDestroy {
   totalPausedTime = 0;
   wpm = 0;
   accuracy = 100;
+  // history of recent WPM values for sparkline chart
+  private readonly INITIAL_WPM_HISTORY_LENGTH = 12;
+  wpmHistory: number[] = Array(this.INITIAL_WPM_HISTORY_LENGTH).fill(0);
+
+  // Generate SVG polyline points for sparkline
+  get sparklinePoints(): string {
+    if (!this.wpmHistory || this.wpmHistory.length === 0) return '';
+    const max = Math.max(...this.wpmHistory, 1);
+    const len = this.wpmHistory.length;
+    return this.wpmHistory.map((v, i) => {
+      const x = (i * (80 / (len - 1 || 1)));
+      const y = 24 - Math.min(24, (v / max) * 24);
+      return `${x},${y}`;
+    }).join(' ');
+  }
   correctChars = 0;
   totalChars = 0;
   private subscription: Subscription;
@@ -44,13 +61,11 @@ export class TypingComponent implements OnInit, OnDestroy {
     });
   }
 
+  private wpmChart?: Chart;
+
   ngOnInit() {
     this.targetText = this.lesson.content;
     this.startNewGame();
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -58,6 +73,53 @@ export class TypingComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.inputField.nativeElement.focus();
     });
+
+    // Initialize Chart.js sparkline
+    if (this.wpmCanvas) {
+      const canvas = this.wpmCanvas.nativeElement;
+      // Ensure canvas has explicit size in device pixels
+      canvas.width = 80;
+      canvas.height = 24;
+      canvas.style.width = '80px';
+      canvas.style.height = '24px';
+      // Create Chart using the canvas element directly
+      const initialData = this.wpmHistory && this.wpmHistory.length ? [...this.wpmHistory] : [0];
+      try {
+        this.wpmChart = new Chart(canvas, {
+          type: 'line',
+          data: {
+            labels: initialData.map((_, i) => i.toString()),
+            datasets: [{
+              data: initialData,
+              borderColor: '#7c3aed',
+              borderWidth: 2,
+              tension: 0.3,
+              pointRadius: 0,
+              fill: false,
+              backgroundColor: 'transparent'
+            }]
+          },
+          options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            scales: {
+              x: { display: false },
+              y: { display: false, min: 0 }
+            },
+            plugins: { legend: { display: false }, tooltip: { enabled: false } },
+            elements: { line: { capBezierPoints: true } }
+          }
+        } as ChartConfiguration);
+        console.debug('[Typing] WPM chart initialized', { canvas, chart: this.wpmChart });
+      } catch (err) {
+        console.error('[Typing] Failed to initialize WPM chart', err);
+      }
+    }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.wpmChart?.destroy();
   }
 
   startNewGame() {
@@ -68,15 +130,27 @@ export class TypingComponent implements OnInit, OnDestroy {
     this.startTime = null;
     this.pausedTime = null;
     this.totalPausedTime = 0;
-    this.wpm = 0;
+  this.wpm = 0;
     this.accuracy = 100;
     this.correctChars = 0;
     this.totalChars = 0;
+  // reset history to flat zeros so the sparkline shows a baseline before typing
+  this.wpmHistory = Array(this.INITIAL_WPM_HISTORY_LENGTH).fill(0);
     
     // Focus input when starting new game
     setTimeout(() => {
       this.inputField.nativeElement.focus();
     });
+    // ensure chart shows initial state after game start
+    setTimeout(() => this.refreshWpmChart(), 50);
+  }
+
+  private refreshWpmChart() {
+    if (!this.wpmChart) return;
+    const data = this.wpmHistory && this.wpmHistory.length ? this.wpmHistory : [0];
+    this.wpmChart.data.labels = data.map((_, i) => i.toString());
+    this.wpmChart.data.datasets![0].data = data as any;
+    try { this.wpmChart.update('none'); } catch (e) { /* ignore */ }
   }
 
   onKeyDown(event: KeyboardEvent) {
@@ -133,6 +207,18 @@ export class TypingComponent implements OnInit, OnDestroy {
         // WPM = (correct characters / 5) / time in minutes
         const wordsTyped = this.correctChars / 5;
         this.wpm = Math.round(wordsTyped / timeElapsed);
+        // record to history if changed
+        const last = this.wpmHistory.length ? this.wpmHistory[this.wpmHistory.length - 1] : null;
+        if (last !== this.wpm) {
+          this.wpmHistory.push(this.wpm);
+          if (this.wpmHistory.length > 24) this.wpmHistory.shift();
+          // update chart
+          if (this.wpmChart) {
+            this.wpmChart.data.labels = this.wpmHistory.map((_, i) => i.toString());
+            this.wpmChart.data.datasets![0].data = this.wpmHistory as any;
+            this.wpmChart.update('none');
+          }
+        }
       }
     }
     
