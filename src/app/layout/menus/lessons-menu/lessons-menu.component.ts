@@ -39,9 +39,10 @@ export class LessonsMenuComponent implements OnInit {
   }
 
   loadMainCategories(): void {
-    this.categoryService.getMainCategories().subscribe(categories => {
+    // Use getCategoryTree so each main category includes its `children` array
+    this.categoryService.getCategoryTree().subscribe(categories => {
       this.mainCategories = categories;
-      console.log('Loaded main categories:', categories);
+      console.log('Loaded main categories (with children):', categories);
     });
   }
 

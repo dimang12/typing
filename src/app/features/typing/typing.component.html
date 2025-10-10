@@ -1,18 +1,22 @@
-<div class="max-w-8xl mx-auto p-6 mt-10">
+<div class="bg-transparent backdrop-blur-md max-w-5xl mx-auto p-6 mt-10">
   @if (!isGameComplete) {
     <div class="mb-8">
       <h2 class="text-3xl font-bold mb-6">Typing Practice</h2>
       <div class="flex justify-between items-center mb-6">
-        <div class="text-2xl font-semibold">
+        <div class="text-2xl font-semibold flex items-center gap-3">
+          <!-- WPM mini chart (Chart.js) -->
+          <canvas #wpmCanvas width="80" height="24" class="inline-block bg-blue-50" style="width:80px;height:24px"></canvas>
           WPM: {{ wpm }} | Accuracy: {{ accuracy }}%
         </div>
         <div class="flex-1 flex justify-end gap-3">
-          <button (click)="startNewGame()" 
-                class="px-6 py-3 text-lg bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-          New Game
+          <button 
+            (click)="startNewGame()" 
+            class="px-8 py-2 text-lg font-semibold bg-white text-purple-600 border-2 border-purple-600 rounded-xl hover:bg-purple-50 transform hover:scale-105 transition-all shadow-lg flex items-center gap-2">
+              <span class="material-icons">replay</span> Restart
           </button>
           <button (click)="togglePause()" 
-                  class="px-6 py-3 text-lg bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                  class="px-8 py-2 text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all shadow-lg flex items-center gap-2">
+            <span class="material-icons">pause</span>
             {{ isPaused ? 'Continue' : 'Pause' }}
           </button>
         </div>
@@ -23,7 +27,7 @@
     <div class="mb-8">
       <div
         (click)="focusInput()" 
-        class="text-3xl font-mono mb-4 p-6 bg-gray-100 rounded leading-relaxed">
+        class="text-3xl font-mono mb-4 p-6 bg-gray-100 rounded leading-relaxed shadow-lg hover:shadow-xl transition-shadow cursor-text select-none">
         <div class="typing-area">
           @for (char of targetText.split(''); track $index) {
             <span [class]="getCharClass($index) + ($index === userInput.length ? ' cursor-blink' : '') + ' my-1 inline-block'">{{ char }}</span>
@@ -42,7 +46,7 @@
   }
 
   @if (isGameComplete) {
-    <div class="relative overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 rounded-2xl shadow-2xl p-8 animate-fade-in">
+    <div class="relative overflow-hidden bg-gradient-to-br from-white via-gray-50 to-purple-50 rounded-2xl shadow-2xl p-8 animate-fade-in">
       <!-- Celebration Icons -->
       <div class="absolute top-4 left-4 animate-bounce-slow">
         <span class="material-icons text-6xl text-yellow-400">emoji_events</span>
